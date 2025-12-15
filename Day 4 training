@@ -1,0 +1,29 @@
+# Day 4 - Temperature Monitoring
+
+## Overview
+This project reads temperature from a TMP36 or LM35 sensor, displays it on a 16x2 LCD, and provides a warning when the temperature gets too high.
+
+## Features
+- Temperature sensor reading
+- Real-time LCD display
+- Overheating alert system using an LED
+
+## Behavior
+- Temperature is shown in degrees Celsius on the LCD
+- If temperature is greater than 40°C, the LED blinks fast
+- If temperature is 40°C or below, the LED remains OFF
+
+## Components Used
+- Arduino Uno
+- TMP36 or LM35 temperature sensor
+- 16x2 LCD
+- LED
+- 220Ω resistor
+- Potentiometer
+- Jumper wires
+
+## What I Learned
+- How to read analog sensor values
+- How to convert voltage to temperature
+- How to use an LCD with Arduino
+- How to use conditions for alerts
