@@ -1,0 +1,129 @@
+# 🟡 Day 9 — Battery Level Indicator (Potentiometer)
+
+## 🎯 Goal
+
+Understand basic **battery charging and level indication logic** by simulating battery voltage using a potentiometer and displaying the level with LEDs.
+
+---
+
+## 📚 Concept Overview
+
+In this project, a **potentiometer** is used to simulate different battery voltage levels. The Arduino reads this value as an **analog input** and decides which LED to turn ON based on the voltage range.
+
+This demonstrates:
+
+* Analog-to-digital conversion (ADC)
+* Voltage level comparison
+* Simple battery level indication logic
+
+---
+
+## 🔧 Components Used
+
+* Arduino Uno
+* Potentiometer (used as battery simulator)
+* 3 LEDs
+
+  * 🔴 Red — Low level
+  * 🟡 Yellow — Medium level
+  * 🟢 Green — Full level
+* Resistors
+* Jumper wires
+* Breadboard
+
+---
+
+## 🔌 How It Works
+
+1. The potentiometer outputs a variable voltage (0–5V).
+2. Arduino reads this voltage using an analog pin.
+3. The value is mapped into three ranges:
+
+   * **Low voltage** → Red LED ON
+   * **Medium voltage** → Yellow LED ON
+   * **High voltage** → Green LED ON
+4. Only **one LED lights up at a time**, representing the current battery level.
+
+---
+
+## 💡 LED Logic
+
+| Battery Level | LED Status |
+| ------------- | ---------- |
+| Low           | Red ON     |
+| Medium        | Yellow ON  |
+| Full          | Green ON   |
+
+---
+
+## 🧪 Testing
+
+* Rotating the potentiometer knob changes the simulated battery voltage.
+* LEDs switch automatically based on the voltage level.
+* This simulates how real devices indicate battery charge levels.
+
+---
+Arduino code
+// Day 6 - Battery Level Indicator using Potentiometer
+// Red = Low, Yellow = Medium, Green = Full
+
+const int potPin = A0;     // Potentiometer input pin
+const int redLED = 2;      // Red LED pin
+const int yellowLED = 3;   // Yellow LED pin
+const int greenLED = 4;    // Green LED pin
+
+int potValue;              // Raw potentiometer reading (0–1023)
+int batteryPercent;        // Battery level mapped to 0–100%
+
+void setup() {
+  pinMode(redLED, OUTPUT);
+  pinMode(yellowLED, OUTPUT);
+  pinMode(greenLED, OUTPUT);
+  Serial.begin(9600);      // Start serial monitor
+}
+
+void loop() {
+  // 1. Read potentiometer value
+  potValue = analogRead(potPin);
+
+  // 2. Convert to battery percentage (0–100%)
+  batteryPercent = map(potValue, 0, 1023, 0, 100);
+
+  // 3. Print battery level to serial monitor
+  Serial.print("Battery Level: ");
+  Serial.print(batteryPercent);
+  Serial.println("%");
+
+  // 4. LED logic
+  if (batteryPercent < 30) {
+    // Low battery → Red ON
+    digitalWrite(redLED, HIGH);
+    digitalWrite(yellowLED, LOW);
+    digitalWrite(greenLED, LOW);
+  } else if (batteryPercent < 70) {
+    // Medium battery → Yellow ON
+    digitalWrite(redLED, LOW);
+    digitalWrite(yellowLED, HIGH);
+    digitalWrite(greenLED, LOW);
+  } else {
+    // Full battery → Green ON
+    digitalWrite(redLED, LOW);
+    digitalWrite(yellowLED, LOW);
+    digitalWrite(greenLED, HIGH);
+  }
+
+  delay(500); // Update every 0.5 seconds
+}
+
+## 📌 Learning Outcomes
+
+* Understanding battery level indication
+* Using potentiometer as a voltage source
+* Controlling LEDs with conditional logic
+* Applying real-world charging concepts in embedded systems
+
+---
+
+## ✅ Conclusion
+
+This project demonstrates a simple but effective battery level indicator using Arduino. It provides a foundation for more advanced battery monitoring systems used in real electronic devices.
